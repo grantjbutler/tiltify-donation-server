@@ -15,13 +15,17 @@ function getRecentDonations() {
                 break
             }
 
-            const overlayDonation = {
+            let overlayDonation = {
                 id: String(donation.id),
                 name: donation.name,
-                comment: donation.comment,
                 amount: donation.amount,
                 date_created: new Date(donation.completedAt)
             }
+
+            if (donation.comment != null) {
+                overlayDonation.comment = donation.comment
+            }
+
             io.emit('donation', overlayDonation)
             console.log(`> Emitting donation: ${util.inspect(overlayDonation)}`)
         }
