@@ -2,6 +2,7 @@ const TiltifyClient = require('tiltify-api-client')
 const app = require('express')()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
+const util = require('util')
 
 let client = new TiltifyClient(process.env.TILTIFY_ACCESS_TOKEN)
 let interval = process.env.REFRESH_INTERVAL || 5000
