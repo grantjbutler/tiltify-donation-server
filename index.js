@@ -19,7 +19,7 @@ function getRecentDonations() {
                 id: String(donation.id),
                 name: donation.name,
                 comment: donation.comment,
-                amount: donation.comment,
+                amount: donation.amount,
                 date_created: new Date(donation.completedAt)
             }
             io.emit('donation', overlayDonation)
