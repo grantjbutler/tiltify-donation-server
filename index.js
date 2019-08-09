@@ -21,8 +21,8 @@ function getRecentDonations() {
                 amount: donation.comment,
                 date_created: new Date(donation.completedAt)
             }
-            io.emit('donation', donation)
-            console.log(`> Emitting donation: ${util.inspect(donation)}`)
+            io.emit('donation', overlayDonation)
+            console.log(`> Emitting donation: ${util.inspect(overlayDonation)}`)
         }
         
         if (donations.length > 0) {
