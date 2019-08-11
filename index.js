@@ -60,6 +60,15 @@ let port = process.env.PORT || 8081
 server.listen(port, () => {
     console.log(`Listening on port ${port}`)
 
-    getTotal()
-    getRecentDonations()
+    if (lastSeenDonationID != '') {
+        console.log('delaying fetch of donations for 10 seconds')
+        setTimeout(() => {
+            getTotal()
+            getRecentDonations()
+        }, 1000 * 10)
+    }
+    else {
+        getTotal()
+        getRecentDonations()
+    }
 })
