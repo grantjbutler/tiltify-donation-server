@@ -7,7 +7,7 @@ const util = require('util')
 let client = new TiltifyClient(process.env.TILTIFY_ACCESS_TOKEN)
 let interval = process.env.REFRESH_INTERVAL || 5000
 
-let lastSeenDonationID = ''
+let lastSeenDonationID = process.env.LAST_SEEN_DONATION_ID || ''
 function getRecentDonations() {
     client.Campaigns.getRecentDonations(process.env.CAMPAIGN_ID, (donations) => {
         for (let donation of donations) {
