@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "socket.io": "^2.4.0",
+    "socket.io": "^4.5.0",
     "tiltify-api-client": "^1.0.8"
   }
 }
