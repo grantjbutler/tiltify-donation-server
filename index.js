@@ -41,6 +41,7 @@ function getRecentDonations() {
 }
 
 let campaignTotal = 0.00
+let campaignTarget = 0.00
 function getTotal() {
     client.Campaigns.get(process.env.CAMPAIGN_ID, (campaign) => {
         if (campaignTotal != campaign.amountRaised) {
@@ -48,6 +49,13 @@ function getTotal() {
             
             io.emit('total', campaignTotal)
             console.log(`> Emitting total: ${campaignTotal}`)
+        }
+
+        if (campaignTarget != campaign.fundraiserGoalAmount) {
+            campaignTarget = campaign.fundraiserGoalAmount
+
+            io.emit('target', campaignTarget);
+            console.log(`> Emitting total: ${campaignTarget}`)
         }
 
         setTimeout(() => {
@@ -60,15 +68,15 @@ let port = process.env.PORT || 8081
 server.listen(port, () => {
     console.log(`Listening on port ${port}`)
 
-    if (lastSeenDonationID != '') {
+    // if (lastSeenDonationID != '') {
         console.log('delaying fetch of donations for 10 seconds')
         setTimeout(() => {
             getTotal()
             getRecentDonations()
         }, 1000 * 10)
-    }
-    else {
-        getTotal()
-        getRecentDonations()
-    }
+    // }
+    // else {
+    //     getTotal()
+    //     getRecentDonations()
+    // }
 })
