@@ -62,7 +62,7 @@ async function getTotal() {
                 campaignTarget = campaign.fundraiserGoalAmount
 
                 io.emit('target', campaignTarget);
-                console.log(`> Emitting total: ${campaignTarget}`)
+                console.log(`> Emitting target: ${campaignTarget}`)
             }
 
             setTimeout(() => {
