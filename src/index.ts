@@ -42,7 +42,11 @@ app.use(makeWebhookRouter({
         setTarget(campaign.goal)
     },
     onDonationUpdated: (donation) => {
-        io.emit('donation', donation);
+        io.emit('donation', {
+            id: donation.id,
+            name: donation.donor_name,
+            amount: donation.amount
+        });
     }
 }))
 
