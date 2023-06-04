@@ -16,6 +16,7 @@ interface TiltifyClientRequest<ResponseSchema extends z.ZodTypeAny> {
     params?: any;
     data?: any;
     schema: ResponseSchema;
+    signal?: AbortSignal;
 }
 
 export class TiltifyClient {
@@ -77,7 +78,8 @@ export class TiltifyClient {
                 function(data: any) {
                     return request.schema.parse(JSON.parse(data));
                 }
-            ]
+            ],
+            signal: request.signal
         });
         return response.data;
     }
