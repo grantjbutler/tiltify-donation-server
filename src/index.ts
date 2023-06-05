@@ -6,7 +6,6 @@ import { Server } from "socket.io";
 
 import express from 'express';
 import { makeWebhookRouter } from './tiltify/webhooks';
-import { Money } from "./tiltify/models/money";
 
 const app = express()
 const httpServer = createServer(app)
@@ -32,20 +31,23 @@ function reactive<T>(name: string): (value: T) => void {
     }
 }
 
-let setTotal = reactive<Money>('total');
-let setTarget = reactive<Money>('target');
+let setTotal = reactive<number>('total');
+let setTarget = reactive<number>('target');
 
 app.use(makeWebhookRouter({
     signingKey: loadEnv('TILTIFY_WEBHOOK_SIGNING_KEY'),
     onCampaignUpdated: (campaign) => {
-        setTotal(campaign.amount_raised);
-        setTarget(campaign.goal)
+        setTotal(parseFloat(campaign.amount_raised.value));
+        setTarget(parseFloat(campaign.goal.value))
     },
     onDonationUpdated: (donation) => {
         io.emit('donation', {
             id: donation.id,
             name: donation.donor_name,
-            amount: donation.amount
+            amount: {
+                value: parseFloat(donation.amount.value),
+                currency: donation.amount.currency
+            }
         });
     }
 }))
