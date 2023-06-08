@@ -37,10 +37,14 @@ let setTarget = reactive<number>('target');
 app.use(makeWebhookRouter({
     signingKey: loadEnv('TILTIFY_WEBHOOK_SIGNING_KEY'),
     onCampaignUpdated: (campaign) => {
+        console.log(`[${new Date()}] got campaign`, campaign);
+
         setTotal(parseFloat(campaign.amount_raised.value));
         setTarget(parseFloat(campaign.goal.value))
     },
     onDonationUpdated: (donation) => {
+        console.log(`[${new Date()}] got donation`, donation);
+
         io.emit('donation', {
             id: donation.id,
             name: donation.donor_name,
