@@ -27,6 +27,11 @@ export function makeVerifySignatureMiddleware(signingKey: string): RequestHandle
 
         if (!signature || !timestamp || !body) {
             console.log('missing required data');
+            console.log('signature', signature);
+            console.log('timestamp', timestamp);
+            console.log('body', body);
+            console.log('req', req);
+
             res.status(422).end()
             return;
         }
