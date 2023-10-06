@@ -20,30 +20,36 @@ export function makeWebhookRouter(options: WebhookRouterOptions): Router {
     router.use(makeVerifySignatureMiddleware(options.signingKey));
 
     router.post('/', (req, res) => {
-        const body = JSON.parse(req.body);
-        const message = WebhookMessageSchema.parse(body);
+        try {
+            const body = JSON.parse(req.body);
+            const message = WebhookMessageSchema.parse(body);
 
-        switch (message.meta.event_type) {
-            case WebhookMessageType.CampaignUpdated:
-                const campaign = CampaignSchema.parse(message.data);
-                
-                if (options.onCampaignUpdated) {
-                    options.onCampaignUpdated(campaign);
-                }
+            switch (message.meta.event_type) {
+                case WebhookMessageType.CampaignUpdated:
+                    const campaign = CampaignSchema.parse(message.data);
+                    
+                    if (options.onCampaignUpdated) {
+                        options.onCampaignUpdated(campaign);
+                    }
 
-                break;
+                    break;
 
-            case WebhookMessageType.DonationUpdated:
-                const donation = DonationSchema.parse(message.data);
+                case WebhookMessageType.DonationUpdated:
+                    const donation = DonationSchema.parse(message.data);
 
-                if (options.onDonationUpdated) {
-                    options.onDonationUpdated(donation);
-                }
+                    if (options.onDonationUpdated) {
+                        options.onDonationUpdated(donation);
+                    }
 
-                break;
+                    break;
+            }
+
+            res.status(200).end();
+        } catch (error) {
+            console.log(error);
+
+            throw error;
         }
-
-        res.status(200).end();
     })
 
     return router;
