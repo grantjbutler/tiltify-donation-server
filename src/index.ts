@@ -38,15 +38,25 @@ function reactive<T>(name: string): (value: T) => void {
 let setTotal = reactive<number>('total');
 let setTarget = reactive<number>('target');
 
+let campaignID = loadEnv('TILTIFY_CAMPAIGN_ID');
+
 app.use(makeWebhookRouter({
     signingKey: loadEnv('TILTIFY_WEBHOOK_SIGNING_KEY'),
     onCampaignUpdated: (campaign) => {
+        if (campaign.id != campaignID) {
+            return;
+        }
+
         console.log(`[${new Date()}] got campaign`, campaign);
 
         setTotal(parseFloat(campaign.amount_raised.value));
         setTarget(parseFloat(campaign.goal.value))
     },
     onDonationUpdated: (donation) => {
+        if (donation.campaign_id != campaignID) {
+            return;
+        }
+
         console.log(`[${new Date()}] got donation`, donation);
 
         io.emit('donation', {
