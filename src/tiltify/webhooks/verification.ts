@@ -31,12 +31,6 @@ export function makeVerifySignatureMiddleware(signingKey: string): RequestHandle
         }
 
         if (!verifySignature(signingKey, signature, timestamp, body)) {
-            console.log('signature verification failed');
-            console.log('signingKey', signingKey);
-            console.log('signature', signature);
-            console.log('timestamp', timestamp);
-            console.log('body', body);
-
             res.status(403).send()
             return;
         }
