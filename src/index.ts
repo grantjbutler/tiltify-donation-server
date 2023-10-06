@@ -18,6 +18,10 @@ function reactive<T>(name: string): (value: T) => void {
         if (storage) {
             socket.emit(name, storage)
         }
+
+        socket.on('update', () => {
+            socket.emit(name, storage);
+        })
     });
     
     return (value: T) => {
