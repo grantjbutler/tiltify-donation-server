@@ -65,7 +65,9 @@ app.use(makeWebhookRouter({
             amount: {
                 value: parseFloat(donation.amount.value),
                 currency: donation.amount.currency
-            }
+            },
+            date_created: donation.completed_at,
+            comment: donation.donor_comment
         });
     }
 }))
