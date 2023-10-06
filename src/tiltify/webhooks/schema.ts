@@ -2,7 +2,9 @@ import z from "zod";
 
 export enum WebhookMessageType {
     DonationUpdated = "public:direct:donation_updated",
-    CampaignUpdated = "public:direct:fact_updated"
+    CampaignUpdated = "public:direct:fact_updated",
+    PrivateDonationUpdated = "private:direct:donation_updated",
+    PrivateCampaignUpdated = "private:direct:fact_updated",
 }
 
 export const WebhookMessageSchema = z.object({

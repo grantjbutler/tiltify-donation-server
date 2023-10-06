@@ -25,6 +25,7 @@ export function makeWebhookRouter(options: WebhookRouterOptions): Router {
 
         switch (message.meta.event_type) {
             case WebhookMessageType.CampaignUpdated:
+            case WebhookMessageType.PrivateCampaignUpdated:
                 const campaign = CampaignSchema.parse(message.data);
                 
                 if (options.onCampaignUpdated) {
@@ -34,6 +35,7 @@ export function makeWebhookRouter(options: WebhookRouterOptions): Router {
                 break;
 
             case WebhookMessageType.DonationUpdated:
+            case WebhookMessageType.PrivateDonationUpdated:
                 const donation = DonationSchema.parse(message.data);
 
                 if (options.onDonationUpdated) {
